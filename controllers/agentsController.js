@@ -1,13 +1,13 @@
 const Agent = require("../models/agent");
 
 const getAgentsByFilters = async (req, res) => {
-  const filters = req.body; // Assuming filters are sent as JSON in the request body
+  const filters = req.body;
 
   try {
     const query = {};
 
     // Iterate over keys in filters object and construct the query dynamically
-    Object.keys(filters).forEach(key => {
+    Object.keys(filters).forEach((key) => {
       query[key] = filters[key];
     });
 
@@ -16,7 +16,9 @@ const getAgentsByFilters = async (req, res) => {
     if (agents.length > 0) {
       res.json(agents);
     } else {
-      res.status(404).json({ message: "No agents found with the specified filters" });
+      res
+        .status(404)
+        .json({ message: "No agents found with the specified filters" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
