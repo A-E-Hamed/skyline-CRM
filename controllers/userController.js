@@ -2,11 +2,11 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 // Generate JWT token
-// const generateToken = (id) => {
-//   return jwt.sign({ id }, process.env.JWT_SECRET, {
-//     expiresIn: "30d",
-//   });
-// };
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 // Register a new user
 const registerUser = async (req, res) => {
@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        // token: generateToken(user._id),
+        token: generateToken(user._id),
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -68,7 +68,8 @@ const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        // token: generateToken(user._id),
+        role: user.role,
+        token: generateToken(user._id),
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
@@ -79,7 +80,6 @@ const loginUser = async (req, res) => {
 };
 
 // get user with email
-
 const getUserByEmail = async (req, res) => {
   let { email } = req.body;
 
