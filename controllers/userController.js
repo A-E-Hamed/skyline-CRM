@@ -83,10 +83,11 @@ const loginUser = async (req, res) => {
 const getUserByEmail = async (req, res) => {
   let { email } = req.body;
 
-  email = email.toLowerCase();
   if (!email) {
     return res.status(400).json({ message: "Email is required" });
   }
+
+  email = email.toLowerCase();
 
   try {
     const user = await User.findOne({ email });
