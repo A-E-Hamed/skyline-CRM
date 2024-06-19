@@ -81,15 +81,20 @@ const loginUser = async (req, res) => {
 
 // get user with email
 const getUserByEmail = async (req, res) => {
-  let { email } = req.body;
+  const { email } = req.body;
 
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" });
+  
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: "Not Authorized" });
   }
 
-  // email = email.toLowerCase();
-
   try {
+
+    
+
+    
     const user = await User.findOne({ email });
 
     if (user) {
@@ -100,7 +105,7 @@ const getUserByEmail = async (req, res) => {
         role: user.role,
       });
     } else {
-      res.status(401).json({ message: "No user Found with this email " });
+      res.status(401).json({ message: "No user found with this email" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

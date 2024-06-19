@@ -5,6 +5,7 @@ const {
   getUserByEmail,
 } = require("../controllers/userController");
 const { validate, userRegistrationRules } = require("../middleware/user");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -20,6 +21,6 @@ router.post(
 router.post("/login", loginUser);
 
 // search for user with email
-router.get("/get-user", getUserByEmail);
+router.post("/get-user", protect, getUserByEmail);
 
 module.exports = router;
