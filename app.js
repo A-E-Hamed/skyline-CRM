@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const agentsRoutes = require("./routes/agentsRoutes");
+const showsRoutes = require("./routes/showsRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -25,6 +26,9 @@ app.use("/api/users", userRoutes);
 
 // use agents routes
 app.use("/api/agents", agentsRoutes);
+
+//use shows routes
+app.use("/api/shows", showsRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
