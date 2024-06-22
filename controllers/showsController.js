@@ -1,7 +1,7 @@
 const Shows = require("../models/shows");
 
 const createShow = async (req, res) => {
-  const { Show, Company, Phone, Timezone } = req.body;
+  const { Show, Company, Phone, Timezone, ...rest } = req.body;
 
   // Validate required fields
   if (!Show || !Company || !Phone || !Timezone) {
@@ -11,9 +11,20 @@ const createShow = async (req, res) => {
   }
 
   try {
-    // Create a new show
-    const newShow = await Shows.create(req.body);
-    res.status(201).json(newShow);
+    const newShow = {
+      Show,
+      Companies: [
+        {
+          Company,
+          Phone,
+          Timezone,
+        },
+      ],
+      ...rest,
+    };
+
+    const createdShow = await Shows.create(newShow);
+    res.status(201).json(createdShow);
   } catch (error) {
     console.error("Error creating show:", error);
     res.status(500).json({ message: error.message });
